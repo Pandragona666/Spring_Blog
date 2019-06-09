@@ -8,10 +8,7 @@ import com.example.spring_task.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,4 +65,25 @@ public class PostsController {
         return "redirect:/";
     }
 
+    @DeleteMapping("/deletepost/{post_id}")
+    public String deletePost(@PathVariable Long post_id){
+        postService.deletePost(post_id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/updatepost/{post_id}")
+    public String updatePost(@PathVariable Long post_id, Model model){
+        Post post = postService.showPost(post_id);
+        model.addAttribute("post", post);
+        List<CategoryEnum> categories =
+                new ArrayList<>(Arrays.asList(CategoryEnum.values()));
+        model.addAttribute("categories", categories);
+        return "updatepost";
+    }
+
+    @PutMapping("/updatepost/{post_id}")
+    public String updatePost(@PathVariable Long post_id, @ModelAttribute Post post) {
+        postService.updatePost(post_id, post);
+        return "redirect:/";
+    }
 }

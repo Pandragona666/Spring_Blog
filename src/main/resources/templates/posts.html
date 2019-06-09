@@ -87,7 +87,12 @@
 
         <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+          <form  th:action="@{'/deletepost/' + ${post.getId()}}" th:method="delete">
+            <input class="btn btn-primary float-right" type="submit" value="delete">
+          </form>
+          <form  th:action="@{'/updatepost/' + ${post.getId()}}" th:method="get">
+            <input class="btn btn-primary float-right" type="submit" value="update">
+          </form>
         </div>
       </div>
     </div>

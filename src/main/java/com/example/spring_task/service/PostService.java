@@ -34,6 +34,7 @@ public class PostService {
         return postRepository.getOne(postId);
     }
 
+
     public void addComment(Comment comment, Long post_id, Long user_id){
         User user = userRepository.getOne(user_id);
         Post post = postRepository.getOne(post_id);
@@ -44,6 +45,18 @@ public class PostService {
 
     public void savePost(Post post){
         post.setPostOwner(userRepository.getOne(1L));
+        postRepository.save(post);
+    }
+
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+    }
+
+    public void updatePost(Long postId, Post updatedPost){
+        Post post = postRepository.getOne(postId);
+        post.setPostName(updatedPost.getPostName());
+        post.setContent(updatedPost.getContent());
+        post.setCategoryEnum(updatedPost.getCategoryEnum());
         postRepository.save(post);
     }
 }
