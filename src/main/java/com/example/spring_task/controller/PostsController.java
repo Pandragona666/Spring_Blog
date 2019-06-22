@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +34,7 @@ public class PostsController {
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             //przekierowuję do widoku zalogowanego użytkownika
             model.addAttribute("loggedEmail", userDetails.getUsername());
+            model.addAttribute("isAdmin", postService.isAdmin(userDetails));
         }
         List<Post> posts = postService.showAllPosts();
         model.addAttribute("posts", posts);
