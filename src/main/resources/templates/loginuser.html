@@ -66,7 +66,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-heading">
-          <h1>Register your credential</h1>
+          <h1>Type your credentials</h1>
         </div>
       </div>
     </div>
@@ -80,8 +80,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <form th:align="center"
-              th:action="@{/register}"
-              th:object="${user}"
+              th:action="@{/...}"
               th:method="post"
               name="sentMessage" id="contactForm" novalidate>
           <div class="control-group">
@@ -91,7 +90,6 @@
                      class="form-control"
                      placeholder="input your email"
                      id="name">
-              <span th:errors="*{email}">email error</span>
               <br>
             </div>
           </div>
@@ -101,17 +99,7 @@
                       th:field="*{password}"
                      class="form-control"
                      placeholder="input your password">
-              <span th:errors="*{password}">password error</span>
-              <br>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <input th:align="center" type="password"
-                     th:field="*{password_confirm}"
-                     class="form-control"
-                     placeholder="repeat your password">
-              <span th:if="${passwordMessage != null}" th:text="${passwordMessage}">password_compare</span>
+
               <br>
             </div>
           </div>
@@ -119,8 +107,9 @@
             <button type="submit"
                     class="btn btn-primary"
                     id="sendMessageButton">
-              Register
+              Login
             </button>
+            <span>login error</span>
           </div>
         </form>
       </div>

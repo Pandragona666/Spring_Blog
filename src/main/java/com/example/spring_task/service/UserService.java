@@ -30,4 +30,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public boolean userCheck(String email, String password){
+        return false;
+    }
+
+    public void loginUser(){
+
+    }
+
 }

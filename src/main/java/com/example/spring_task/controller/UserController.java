@@ -45,4 +45,10 @@ public class UserController {
         return "adduser";
     }
 
+    @PostMapping("/login")
+    public String loginUser(){
+
+        return "/";
+    }
+
 }
