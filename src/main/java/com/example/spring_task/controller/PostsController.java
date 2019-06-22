@@ -30,7 +30,12 @@ public class PostsController {
     }
 
     @GetMapping("/")
-    public String home(Model model){
+    public String home(Model model, Authentication auth){
+        if (auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            //przekierowuję do widoku zalogowanego użytkownika
+            model.addAttribute("loggedEmail", userDetails.getUsername());
+        }
         List<Post> posts = postService.showAllPosts();
         model.addAttribute("posts", posts);
         return "posts";
