@@ -6,10 +6,13 @@ import com.example.spring_task.model.enums.CategoryEnum;
 import com.example.spring_task.repository.UserRepository;
 import com.example.spring_task.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +54,13 @@ public class PostsController {
     }
 
     @GetMapping("/addpost")
-    public String addPost(Model model){
+    public String addPost(Model model, Authentication authentication){
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println("LOGIN: " + userDetails.getUsername());
+        System.out.println("PASWORD: " + userDetails.getPassword());
+        System.out.println("AUTHORITIES: " + userDetails.getAuthorities());
+
         model.addAttribute("post", new Post());
         List<CategoryEnum> categories =
                 new ArrayList<>(Arrays.asList(CategoryEnum.values()));
