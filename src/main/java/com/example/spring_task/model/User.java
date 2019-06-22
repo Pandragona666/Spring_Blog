@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,10 +22,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Email(message = "Invalid email address")
+    @NotBlank(message = "Email address is mandatory")
     private String email;
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 6, message = "your password need to be minimum 6 characters long")
     private String password;
     private LocalDateTime registrationDate = LocalDateTime.now();
     private boolean activityFlag = false;
+    @Transient
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 6, message = "your password need to be minimum 6 characters long")
+    private String password_confirm;
 
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.EAGER)
