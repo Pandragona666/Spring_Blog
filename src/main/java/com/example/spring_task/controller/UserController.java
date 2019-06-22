@@ -45,10 +45,15 @@ public class UserController {
         return "adduser";
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String loginUser(){
-
-        return "/";
+        return "loginuser";
     }
+
+//    @PostMapping("/login")
+//    public String loginUser(){
+//
+//        return "/";
+//    }
 
 }
