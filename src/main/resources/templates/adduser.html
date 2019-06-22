@@ -21,7 +21,7 @@
         rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="css/clean-blog.min.css" rel="stylesheet">
+  <link href="../css/clean-blog.min.css" rel="stylesheet">
 
 </head>
 
@@ -66,7 +66,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-heading">
-          <h1>Edit your post</h1>
+          <h1>Add your creditionals</h1>
         </div>
       </div>
     </div>
@@ -80,40 +80,35 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <form th:align="center"
-              th:action="@{'/updatepost/' + ${post.getId()}}"
-              th:object="${post}"
-              th:method="put"
+              th:action="@{/register}"
+              th:object="${user}"
+              th:method="post"
               name="sentMessage" id="contactForm" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <input th:align="center" type="text"
-                     th:field="*{postName}"
+                     th:field="*{email}"
                      class="form-control"
-                     placeholder="input your comment"
-                     id="name"
-                     required data-validation-required-message="Please input your post title">
+                     placeholder="input your email"
+                     id="name">
               <br>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-                            <textarea th:align="center" type="text"
-                                      th:field="*{content}"
-                                      class="form-control"
-                                      placeholder="input your content"
-                                      required data-validation-required-message="Please input your message">
-                            </textarea>
+              <input th:align="center" type="password"
+                      th:field="*{password}"
+                     class="form-control"
+                     placeholder="input your password">
               <br>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <select class="form-control" >
-                <option th:each="c : ${categories}"
-                        th:value="${c}"
-                        th:text="${c}">
-                </option>
-              </select>
+              <input th:align="center" type="password"
+                     th:field="*{password_confirm}"
+                     class="form-control"
+                     placeholder="repeat your password">
               <br>
             </div>
           </div>
@@ -121,7 +116,7 @@
             <button type="submit"
                     class="btn btn-primary"
                     id="sendMessageButton">
-              publish
+              Register
             </button>
           </div>
         </form>
