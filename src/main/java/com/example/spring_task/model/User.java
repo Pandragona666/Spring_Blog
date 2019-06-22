@@ -29,7 +29,7 @@ public class User {
     @Size(min = 6, message = "your password need to be minimum 6 characters long")
     private String password;
     private LocalDateTime registrationDate = LocalDateTime.now();
-    private boolean activityFlag = false;
+    private boolean activityFlag = true;
     @Transient
     @NotBlank(message = "Password is mandatory")
     @Size(min = 6, message = "your password need to be minimum 6 characters long")

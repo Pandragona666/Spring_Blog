@@ -69,8 +69,9 @@ public class PostsController {
     }
 
     @PostMapping("/addpost")
-    public String addPost(@ModelAttribute Post post){
-        postService.savePost(post);
+    public String addPost(@ModelAttribute Post post, Authentication authentication){
+        UserDetails loggedUserDetails = (UserDetails) authentication.getPrincipal();
+        postService.savePost(post, loggedUserDetails.getUsername());
         return "redirect:/";
     }
 

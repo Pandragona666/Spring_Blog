@@ -96,11 +96,11 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <input th:align="center" type="password"
-                      th:name="password"
+                     th:name="password"
                      class="form-control"
                      placeholder="input your password">
-
               <br>
+              <span th:if="${passwordMessage != null}" th:text="${passwordMessage}">login error</span>
             </div>
           </div>
           <div class="form-group">
@@ -109,7 +109,7 @@
                     id="sendMessageButton">
               Login
             </button>
-            <span>login error</span>
+
           </div>
         </form>
       </div>

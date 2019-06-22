@@ -43,8 +43,9 @@ public class PostService {
         commentRepository.save(comment);
     }
 
-    public void savePost(Post post){
-        post.setPostOwner(userRepository.getOne(1L));
+    public void savePost(Post post, String email){
+        User user = userRepository.getByEmail(email);
+        post.setPostOwner(user);
         postRepository.save(post);
     }
 

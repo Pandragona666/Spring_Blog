@@ -17,14 +17,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //konfiguracja zabezpieczeń dla protokołu http
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/addpost").hasAnyRole("USER")
-                .antMatchers("/update/*").hasAnyRole("USER")
+                .antMatchers("/addpost").hasAnyAuthority("role_user")
+                .antMatchers("/update/*").hasAnyAuthority("role_user")
                 .anyRequest().permitAll()
         .and().csrf().disable()
         .formLogin().loginPage("/login")
                 .usernameParameter("login")
                 .passwordParameter("password")
-                .loginProcessingUrl("login-process")
+                .loginProcessingUrl("/login-process")
                 .defaultSuccessUrl("/");
     }
 
@@ -36,10 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .usersByUsernameQuery("SELECT u.email, u.password, u.activity FROM user u WHERE u.email = ?")
-                .authoritiesByUsernameQuery("SELECT u.email, u.role_name FROM " +
-                                            "user u JOIN user_role ur ON (u.id = ur.user_id " +
-                                            "JOIN role r ON (r.id = ur.role_id")
+                .usersByUsernameQuery("SELECT u.email, u.password, u.activity_flag FROM user u WHERE u.email = ?")
+                .authoritiesByUsernameQuery("SELECT u.email, r.role_name FROM " +
+                                            "user u JOIN user_role ur ON (u.id = ur.user_id) " +
+                                            "JOIN role r ON (r.id = ur.role_id) " +
+                                            "WHERE u.email = ?")
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder);
     }
