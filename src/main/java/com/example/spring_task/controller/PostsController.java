@@ -109,6 +109,7 @@ public class PostsController {
         model.addAttribute("post", post);
         List<CategoryEnum> categories =
                 new ArrayList<>(Arrays.asList(CategoryEnum.values()));
+        System.out.println(categories);
         model.addAttribute("categories", categories);
         return "updatepost";
     }
@@ -125,6 +126,18 @@ public class PostsController {
         Long post_id = postService.getPostByCommentId(comment_id);
         //usuwanie posta po id
         postService.deleteComment(comment_id);
+        return "redirect:/post/" + post_id;
+    }
+
+    @GetMapping("/post_like/{post_id}")
+    public String likePost(@PathVariable Long post_id){
+        postService.likePost(post_id);
+        return "redirect:/post/" + post_id;
+    }
+
+    @GetMapping("/post_dislike/{post_id}")
+    public String dislikePost(@PathVariable Long post_id){
+        postService.dislikePost(post_id);
         return "redirect:/post/" + post_id;
     }
 }

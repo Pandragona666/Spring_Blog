@@ -66,6 +66,7 @@ public class PostService {
         post.setPostName(updatedPost.getPostName());
         post.setContent(updatedPost.getContent());
         post.setCategoryEnum(updatedPost.getCategoryEnum());
+        System.out.println(post.getCategoryEnum());
         postRepository.save(post);
     }
 
@@ -84,5 +85,17 @@ public class PostService {
     public Long getPostByCommentId(Long comment_id) {
         Comment comment = commentRepository.getOne(comment_id);
         return comment.getPost().getId();
+    }
+
+    public void likePost(Long post_id) {
+        Post post = postRepository.getOne(post_id);
+        post.setLike_no(post.getLike_no()+1);
+        postRepository.save(post);
+    }
+
+    public void dislikePost(Long post_id) {
+        Post post = postRepository.getOne(post_id);
+        post.setDislike_no(post.getDislike_no()+1);
+        postRepository.save(post);
     }
 }

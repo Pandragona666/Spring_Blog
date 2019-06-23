@@ -23,10 +23,14 @@ public class Post {
     private String postName;
     @Type(type = "text")
     private String content;
+    @Enumerated
     private CategoryEnum categoryEnum;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User postOwner;
+
+    private int like_no;
+    private int dislike_no;
 
     public Post(String postName, String content, CategoryEnum categoryEnum, User postOwner) {
         this.postName = postName;
@@ -36,6 +40,6 @@ public class Post {
     }
     @JsonIgnore
     //fetch type eager - powoduje ze wraz z obiektem posta masz dostep do wsyztskich jego powiazań
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
     List<Comment> comments = new ArrayList<>();
 }

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th=”http://www.thymeleaf.org”>
+<html lang="en" xmlns:th=”http://www.thymeleaf.org”
+      xmlns="http://www.w3.org/1999/html">
 
 <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -14,8 +16,10 @@
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+          type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic'
+          rel='stylesheet'
           type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
           rel='stylesheet' type='text/css'>
@@ -30,10 +34,13 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a th:if="${loggedEmail} != null" th:text="${loggedEmail}" class="navbar-brand">logged</a>
+        <a th:if="${loggedEmail} != null" th:text="${loggedEmail}"
+           class="navbar-brand">logged</a>
         <a th:if="${loggedEmail} == null" class="navbar-brand">not logged</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        <button class="navbar-toggler navbar-toggler-right" type="button"
+                data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false"
                 aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -50,12 +57,14 @@
                     <a class="nav-link" th:href="@{/contact}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:if="${loggedEmail == null}" th:href="@{/login}">Login</a>
-                    <a class="nav-link" th:if="${loggedEmail != null}" th:href="@{/logout}">Logout</a>
+                    <a class="nav-link" th:if="${loggedEmail == null}"
+                       th:href="@{/login}">Login</a>
+                    <a class="nav-link" th:if="${loggedEmail != null}"
+                       th:href="@{/logout}">Logout</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" th:href="@{/register}">Register</a>
-            </li>
+                    <a class="nav-link" th:href="@{/register}">Register</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -71,6 +80,10 @@
                     <h1 th:text="${post.getPostName()}">title</h1>
                     <h2 th:text="${post.getPostOwner().getEmail()}">author</h2>
                     <span class="meta" th:text="${post.getCategoryEnum()}"> category </span>
+                    <span class="meta"
+                          th:text="${'Likes: ' + post.getLike_no()}"> like </span>
+                    <span class="meta"
+                          th:text="${'Dislikes: ' + post.getDislike_no()}"> dislike </span>
                 </div>
             </div>
         </div>
@@ -87,23 +100,43 @@
         </div>
     </div>
 </article>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <a th:href="@{'/post_like/' + ${post.getId()}}">I like it!</a> <br>
+            <a th:href="@{'/post_dislike/' + ${post.getId()}}">I don't like
+                it!</a>
+        </div>
+    </div>
+</div>
 
 <hr>
 <h1 th:align="center">Comments</h1>
 <article>
     <div class="container">
-        <p th:align="center" th:if="${post.getComments().size() == 0}">Brak komentarzy</p>
+        <p th:align="center" th:if="${post.getComments().size() == 0}">Brak
+            komentarzy</p>
         <div class="row" th:each="comment: ${post.getComments()}">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <p th:text="${comment.getMessage()}">content</p>
-                <p th:if="${comment.getUser() != null}" th:text="${comment.getUser().getEmail()}">comment's author</p>
-                <p th:if="${comment.getUser() == null}" >Gal Anonim</p>
+                <p th:if="${comment.getUser() != null}"
+                   th:text="${comment.getUser().getEmail()}">comment's
+                    author</p>
+                <p th:if="${comment.getUser() == null}">Gal Anonim</p>
                 <div class="clearfix">
-                    <form th:if="${loggedEmail!= null && comment.getUser() != null}" th:action="@{'/deletecomment/' + ${comment.getCommentId()}}" th:method="delete">
-                        <input th:if="${loggedEmail.equals(comment.getUser().getEmail())}" class="btn btn-primary float-right" type="submit" value="delete">
+                    <form th:if="${loggedEmail!= null && comment.getUser() != null}"
+                          th:action="@{'/deletecomment/' + ${comment.getCommentId()}}"
+                          th:method="delete">
+                        <input th:if="${loggedEmail.equals(comment.getUser().getEmail())}"
+                               class="btn btn-primary float-right" type="submit"
+                               value="delete">
                     </form>
-                    <form th:if="${isAdmin == true && comment.getUser() == null}" th:action="@{'/deletecomment/' + ${comment.getCommentId()}}" th:method="delete">
-                        <input class="btn btn-primary float-right" type="submit" value="delete">
+                    <form th:if="${isAdmin == true && comment.getUser() == null}"
+                          th:action="@{'/deletecomment/' + ${comment.getCommentId()}}"
+                          th:method="delete">
+                        <input class="btn btn-primary float-right" type="submit"
+                               value="delete">
                     </form>
                 </div>
             </div>
@@ -123,11 +156,12 @@
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
                             <textarea th:align="center" type="text"
-                                   th:field="*{message}"
-                                   class="form-control"
-                                   placeholder="input your comment"
-                                   id="name"
-                                      required data-validation-required-message="Please input your message"></textarea>
+                                      th:field="*{message}"
+                                      class="form-control"
+                                      placeholder="input your comment"
+                                      id="name"
+                                      required
+                                      data-validation-required-message="Please input your message"></textarea>
                             <br>
                         </div>
                     </div>
@@ -176,7 +210,8 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+                <p class="copyright text-muted">Copyright &copy; Your Website
+                    2019</p>
             </div>
         </div>
     </div>
