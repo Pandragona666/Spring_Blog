@@ -8,6 +8,7 @@ import com.example.spring_task.repository.CommentRepository;
 import com.example.spring_task.repository.PostRepository;
 import com.example.spring_task.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,14 @@ public class PostService {
     }
 
 
-    public void addComment(Comment comment, Long post_id, Long user_id){
-        User user = userRepository.getOne(user_id);
+    public void addComment(Comment comment, Long post_id, Authentication auth){
+        if (auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            String loggedEmail = userDetails.getUsername();
+            comment.setUser(userRepository.getByEmail(loggedEmail));
+        }
+
         Post post = postRepository.getOne(post_id);
-        comment.setUser(user);
         comment.setPost(post);
         commentRepository.save(comment);
     }
@@ -72,4 +77,12 @@ public class PostService {
         return false;
     }
 
+    public void deleteComment(Long comment_id) {
+        commentRepository.deleteById(comment_id);
+    }
+
+    public Long getPostByCommentId(Long comment_id) {
+        Comment comment = commentRepository.getOne(comment_id);
+        return comment.getPost().getId();
+    }
 }

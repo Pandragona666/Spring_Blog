@@ -50,7 +50,8 @@
                     <a class="nav-link" th:href="@{/contact}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">login</a>
+                    <a class="nav-link" th:if="${loggedEmail == null}" th:href="@{/login}">Login</a>
+                    <a class="nav-link" th:if="${loggedEmail != null}" th:href="@{/logout}">Logout</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" th:href="@{/register}">Register</a>
@@ -95,7 +96,16 @@
         <div class="row" th:each="comment: ${post.getComments()}">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <p th:text="${comment.getMessage()}">content</p>
-                <p th:text="${comment.getUser().getEmail()}">comment's author</p>
+                <p th:if="${comment.getUser() != null}" th:text="${comment.getUser().getEmail()}">comment's author</p>
+                <p th:if="${comment.getUser() == null}" >Gal Anonim</p>
+                <div class="clearfix">
+                    <form th:if="${loggedEmail!= null && comment.getUser() != null}" th:action="@{'/deletecomment/' + ${comment.getCommentId()}}" th:method="delete">
+                        <input th:if="${loggedEmail.equals(comment.getUser().getEmail())}" class="btn btn-primary float-right" type="submit" value="delete">
+                    </form>
+                    <form th:if="${isAdmin == true && comment.getUser() == null}" th:action="@{'/deletecomment/' + ${comment.getCommentId()}}" th:method="delete">
+                        <input class="btn btn-primary float-right" type="submit" value="delete">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

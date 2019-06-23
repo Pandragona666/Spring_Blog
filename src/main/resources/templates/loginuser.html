@@ -50,7 +50,8 @@
           <a class="nav-link" th:href="@{/contact}">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/login}">Login</a>
+          <a class="nav-link" th:if="${loggedEmail == null}" th:href="@{/login}">Login</a>
+          <a class="nav-link" th:if="${loggedEmail != null}" th:href="@{/logout}">Logout</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/register}">Register</a>

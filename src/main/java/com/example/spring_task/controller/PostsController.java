@@ -43,7 +43,13 @@ public class PostsController {
 
 
     @GetMapping("/post/{post_id}")
-    public String getPost(@PathVariable Long post_id, Model model){
+    public String getPost(@PathVariable Long post_id, Model model, Authentication auth){
+        if (auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            //przekierowuję do widoku zalogowanego użytkownika
+            model.addAttribute("loggedEmail", userDetails.getUsername());
+            model.addAttribute("isAdmin", postService.isAdmin(userDetails));
+        }
         Post post = postService.showPost(post_id);
         model.addAttribute("post", post);
         model.addAttribute("comment", new Comment());
@@ -53,18 +59,29 @@ public class PostsController {
     @PostMapping("/addComment/{post_id}/{user_id}")
     public String addComment(@ModelAttribute Comment comment,
                              @PathVariable Long post_id,
-                             @PathVariable Long user_id){
-        postService.addComment(comment, post_id, user_id);
+                             @PathVariable Long user_id,
+                             Authentication auth,
+                             Model model){
+        if (auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            //przekierowuję do widoku zalogowanego użytkownika
+            model.addAttribute("loggedEmail", userDetails.getUsername());
+            model.addAttribute("isAdmin", postService.isAdmin(userDetails));
+        }
+
+        postService.addComment(comment, post_id, auth);
         return "redirect:/post/" + post_id;
     }
 
     @GetMapping("/addpost")
-    public String addPost(Model model, Authentication authentication){
+    public String addPost(Model model, Authentication auth){
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println("LOGIN: " + userDetails.getUsername());
-        System.out.println("PASWORD: " + userDetails.getPassword());
-        System.out.println("AUTHORITIES: " + userDetails.getAuthorities());
+        if (auth != null){
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            //przekierowuję do widoku zalogowanego użytkownika
+            model.addAttribute("loggedEmail", userDetails.getUsername());
+            model.addAttribute("isAdmin", postService.isAdmin(userDetails));
+        }
 
         model.addAttribute("post", new Post());
         List<CategoryEnum> categories =
@@ -100,5 +117,14 @@ public class PostsController {
     public String updatePost(@PathVariable Long post_id, @ModelAttribute Post post) {
         postService.updatePost(post_id, post);
         return "redirect:/";
+    }
+
+    @DeleteMapping("/deletecomment/{comment_id}")
+    public String deleteComment(@PathVariable Long comment_id){
+        //wydobycie id posta
+        Long post_id = postService.getPostByCommentId(comment_id);
+        //usuwanie posta po id
+        postService.deleteComment(comment_id);
+        return "redirect:/post/" + post_id;
     }
 }

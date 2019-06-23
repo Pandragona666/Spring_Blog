@@ -17,8 +17,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //konfiguracja zabezpieczeń dla protokołu http
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/addpost").hasAnyAuthority("role_user")
-                .antMatchers("/update/*").hasAnyAuthority("role_user")
+                .antMatchers("/addpost").hasAnyAuthority("role_user", "role_admin")
+                .antMatchers("/update/*").hasAnyAuthority("role_user", "role_admin")
+                .antMatchers("/delete/*").hasAnyAuthority("role_user", "role_admin")
                 .anyRequest().permitAll()
         .and().csrf().disable()
         .formLogin().loginPage("/login")

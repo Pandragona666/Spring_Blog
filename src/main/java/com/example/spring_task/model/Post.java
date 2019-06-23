@@ -35,6 +35,7 @@ public class Post {
         this.postOwner = postOwner;
     }
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
+    //fetch type eager - powoduje ze wraz z obiektem posta masz dostep do wsyztskich jego powiazań
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "post")
     List<Comment> comments = new ArrayList<>();
 }
