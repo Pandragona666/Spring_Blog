@@ -95,10 +95,14 @@
 
         <!-- Pager -->
         <div class="clearfix">
-          <form th:if="${loggedEmail != null}" th:action="@{'/deletepost/' + ${post.getId()}}" th:method="delete">
+          <form th:if="${loggedEmail != null}"
+                th:action="@{'/deletepost/' + ${post.getId()}}"
+                th:method="delete">
             <input th:if="${loggedEmail.equals(post.getPostOwner().getEmail()) || isAdmin}" class="btn btn-primary float-right" type="submit" value="delete">
           </form>
-          <form th:if="${loggedEmail != null}" th:action="@{'/updatepost/' + ${post.getId()}}" th:method="get">
+          <form th:if="${loggedEmail != null}"
+                th:action="@{'/updatepost/' + ${post.getId()}}"
+                th:method="get">
             <input th:if="${loggedEmail.equals(post.getPostOwner().getEmail()) || isAdmin}" class="btn btn-primary float-right" type="submit" value="update">
           </form>
         </div>
