@@ -87,7 +87,7 @@ public class PostsController {
         List<CategoryEnum> categories =
                 new ArrayList<>(Arrays.asList(CategoryEnum.values()));
         model.addAttribute("categories", categories);
-        return "addPost";
+        return "addpost";
     }
 
     @PostMapping("/addpost")
