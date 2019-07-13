@@ -59,5 +59,8 @@ public class User {
         this.roles.add(role);
     }
 
+    public void subRole(Role role){
+        this.roles.remove(role);
+    }
 
 }

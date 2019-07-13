@@ -24,5 +24,4 @@ public class Role {
         this.roleName = roleName;
     }
 
-
 }
