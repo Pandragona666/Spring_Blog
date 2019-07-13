@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class PostsController {
@@ -37,7 +35,24 @@ public class PostsController {
             model.addAttribute("isAdmin", postService.isAdmin(userDetails));
         }
         List<Post> posts = postService.showAllPosts();
+        // wydobycie listy kategorii
+        Set<CategoryEnum> categories = new HashSet<>();
+        for (Post post : posts) {
+            categories.add(post.getCategoryEnum());
+        }
+        // przekazanie listy kategorii do widoku
+        model.addAttribute("categories", categories);
+        System.out.println("Categories: " + categories);
+        // przekazanie obiektu do widoku
+        // model.addAttribute(nazwa w html, obiekt przekazywany)
         model.addAttribute("posts", posts);
+        return "posts";
+    }
+
+    @GetMapping("/filter_category{category}")
+    public String filterCategories(@PathVariable CategoryEnum category, Model model){
+        List<Post> posts = postService.filterByCategory(category);
+        model.addAttribute("posts",posts);
         return "posts";
     }
 

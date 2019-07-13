@@ -49,6 +49,9 @@
             <a class="nav-link" th:if="${loggedEmail == null}" th:href="@{/login}">Login</a>
             <a class="nav-link" th:if="${loggedEmail != null}" th:href="@{/logout}">Logout</a>
           </li>
+          <li>
+            <a th:href="@{/google_login}">Login with Google</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/register}">Register</a>
           </li>
@@ -76,6 +79,18 @@
   </header>
 
   <!-- Main Content -->
+  <h1 th:align="center">blog categories</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div th:each="category : ${categories}" class="post-preview">
+          <a th:href="@{'/filter_category' + ${category}}" th:text="${category}"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
   <div class="container">
     <div class="row" th:each="post: ${posts}">
       <div class="col-lg-8 col-md-10 mx-auto">
@@ -88,7 +103,7 @@
               content
             </h3>
           </a>
-          <p class="post-meta" th:text="${post.getPostOwner().getEmail()  }">author</p>
+          <p class="post-meta" th:text="${post.getPostOwner().getEmail()}">author</p>
           <p class="post-meta" th:text="${post.getCategoryEnum()}">category</p>
 <!--          <p class="post-meta">Posted by-->
 <!--            <a href="#">autor</a>-->

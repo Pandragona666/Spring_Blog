@@ -98,4 +98,8 @@ public class PostService {
         post.setDislike_no(post.getDislike_no()+1);
         postRepository.save(post);
     }
+
+    public List<Post> filterByCategory(CategoryEnum categoryEnum){
+        return postRepository.findAllByCategoryEnum(categoryEnum);
+    }
 }
