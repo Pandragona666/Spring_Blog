@@ -344,6 +344,10 @@
               <h6 class="m-0 font-weight-bold text-primary">Contact Data</h6>
             </div>
             <div class="card-body">
+              <form th:method="post" th:action="@{'/searchContact'}" th:object="${search}">
+                <input type="text" th:field="*{search_pattern}">
+                <input type="submit" value="search">
+              </form>
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
